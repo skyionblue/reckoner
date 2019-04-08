@@ -31,7 +31,9 @@ except ImportError:
 
 
 setup(name='reckoner',
-      version=__version__,
+      use_scm_version=True,
+      setup_requires=['setuptools_scm'],
+      #version=__version__,
       description='Declarative Helm configuration with Git capability',
       author=__author__,
       author_email='service@reactiveops.com',
@@ -43,7 +45,8 @@ setup(name='reckoner',
         "GitPython==2.1.3",
         "oyaml>=0.8",
         "coloredlogs==9.0",
-        "semver==2.8.0"
+        "semver==2.8.0",
+        "setuptools-scm",
       ],
       entry_points=''' #for click integration
           [console_scripts]
