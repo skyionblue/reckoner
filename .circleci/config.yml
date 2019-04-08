@@ -25,9 +25,9 @@ jobs:
       - run:
           name: Unit Tests
           command: |
-            sudo pip install .
+            pip install --user circleci -r development-requirements.txt
+            pip install --user circleci -e .
             reckoner --version
-            sudo pip install -r tests/requirements.txt
             pytest
       - setup_remote_docker
       - run:
