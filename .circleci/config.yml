@@ -93,13 +93,6 @@ jobs:
             echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
-          name: create release
-          command: |
-            echo "Using Repo:$GITHUB_REPOSITORY and Org:$GITHUB_ORGANIZATION"
-            git fetch --tags
-            curl -O https://raw.githubusercontent.com/reactiveops/release.sh/v0.0.2/release
-            /bin/bash release
-      - run:
           name: package and upload
           command: |
             sudo pip install twine
