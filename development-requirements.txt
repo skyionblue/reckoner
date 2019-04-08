@@ -2,6 +2,5 @@ pytest
 pytest-cov
 wheel
 mock
-setuptools-scm
 autopep8
 flake8
