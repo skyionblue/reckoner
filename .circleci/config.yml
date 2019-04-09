@@ -15,6 +15,58 @@
 version: 2
 
 jobs:
+  end-to-end:
+    docker:
+      - image: circleci/python:3.7
+    working_directory: ~/reckoner
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Get Binaries
+          command: |
+            wget https://storage.googleapis.com/kubernetes-release/release/v1.12.7/bin/linux/amd64/kubectl
+            chmod 0755 kubectl
+
+            wget https://storage.googleapis.com/kubernetes-helm/helm-v2.13.1-linux-amd64.tar.gz
+            tar xzvf -C /tmp helm-*
+            mv /tmp/linux-amd64/helm .
+
+            wget https://github.com/kubernetes-sigs/kind/releases/download/0.2.1/kind-linux-amd64
+            mv kind-linux-amd64 kind
+            chmod 0755 kind
+
+            ./kind create cluster
+            echo "export KUBECONFIG=$(./kind get kubeconfig-path --name=kind)" >> $BASH_ENV
+      - run:
+          name: Install Helm
+          command: |
+            ./kubectl version
+            ./kubectl apply -f \<< EOF
+            apiVersion: v1
+            kind: ServiceAccount
+            metadata:
+              name: tiller
+              namespace: kube-system
+            ---
+            apiVersion: rbac.authorization.k8s.io/v1
+            kind: ClusterRoleBinding
+            metadata:
+              name: tiller
+            roleRef:
+              apiGroup: rbac.authorization.k8s.io
+              kind: ClusterRole
+              name: cluster-admin
+            subjects:
+              - kind: ServiceAccount
+                name: tiller
+                namespace: kube-system
+            EOF
+            ./helm init --service-account tiller
+            count=10
+            while ! helm ls || [[ $count -lt 10 ]]; do sleep 3; let "count++"; done
+            helm ls
+            pip install --user .
+            reckoner --version
   build-2.7:
     docker:
       - image: circleci/python:2.7
