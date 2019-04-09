@@ -42,6 +42,7 @@ jobs:
       - run:
           name: Install Helm
           command: |
+            ./kubectl config current-context
             count=0
             while ! ./kubectl version || [[ $count -lt 10 ]]; do sleep 3; let "count++"; done
             ./kubectl apply -f \<< EOF
