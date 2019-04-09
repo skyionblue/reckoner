@@ -39,6 +39,7 @@ jobs:
             echo "export KUBECONFIG=$(./kind get kubeconfig-path --name=kind)" >> $BASH_ENV
             export KUBECONFIG=$(./kind get kubeconfig-path --name=kind)
             ./kubectl config current-context
+            docker ps -a
       - run:
           name: Install Helm
           command: |
