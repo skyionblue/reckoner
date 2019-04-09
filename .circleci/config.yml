@@ -44,8 +44,8 @@ jobs:
           name: Install Helm
           command: |
             ./kubectl config current-context
-            count=0
-            while ! ./kubectl version || [[ $count -lt 10 ]]; do sleep 3; let "count++"; done
+            sleep 15
+            ./kubectl version
             ./kubectl apply -f \<< EOF
             apiVersion: v1
             kind: ServiceAccount
