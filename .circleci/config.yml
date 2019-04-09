@@ -44,6 +44,8 @@ jobs:
           name: Install Helm
           command: |
             ./kubectl config current-context
+            sleep 120
+            docker ps -a
             docker logs $(docker ps -q)
             ./kubectl version
             ./kubectl apply -f \<< EOF
