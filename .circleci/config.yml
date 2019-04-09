@@ -190,3 +190,7 @@ workflows:
               only: /.*/
             branches:
               ignore: /.*/
+      - end-to-end:
+          filters:
+            branches:
+              - end-to-end
