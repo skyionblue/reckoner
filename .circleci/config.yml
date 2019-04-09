@@ -28,7 +28,7 @@ jobs:
             chmod 0755 kubectl
 
             wget https://storage.googleapis.com/kubernetes-helm/helm-v2.13.1-linux-amd64.tar.gz
-            tar xzvf -C /tmp helm-*
+            tar xzvf helm-* -C /tmp/
             mv /tmp/linux-amd64/helm .
 
             wget https://github.com/kubernetes-sigs/kind/releases/download/0.2.1/kind-linux-amd64
