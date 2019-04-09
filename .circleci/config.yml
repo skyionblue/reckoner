@@ -193,4 +193,4 @@ workflows:
       - end-to-end:
           filters:
             branches:
-              - end-to-end
+              only: /end-to-end/
